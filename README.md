@@ -30,5 +30,6 @@ Set the response as a secret in your GitHub repository settings so that it may b
 We do that directly using the GH comand line.
 
 ```sh
-gh secret set SECRETNAME --body SECRETVALUE
+gh auth login
+gh secret set AZURE_CREDENTIALS --body $SP_AZURE_CREDENTIALS
 ```
