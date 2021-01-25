@@ -29,5 +29,5 @@ jobs:
         with:
           subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
           resourceGroupName: ${{ env.ResourceGroup }}
-          template: ./aks/azuredeploy.json
-          parameters: ./aks/azuredeploy.parameters.json
+          template: ./infrastructure/aks/azuredeploy.json
+          parameters: ./infrastructure/aks/azuredeploy.parameters.json
