@@ -1,18 +1,33 @@
-name: deploy
+name: 'Deploy AKS cluster'
 
 on:
   workflow_dispatch:
-    
+
+env:
+  ResourceGroup: rg-gitops-demo
+  Location: australiaeast
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: 'Checkout'
+        uses: actions/checkout@v2
 
-      - uses: azure/login@v1
+      - name: 'Azure login' 
+        uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - run: |
-          az account list
+      - name: 'Create resource group'
+        run: |
+          az group create -l ${{ env.Location }} -n ${{ env.ResourceGroup }}
+
+      - name: 'Create AKS resources from ARM template'
+        uses: azure/arm-deploy@v1
+        with:
+          subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
+          resourceGroupName: ${{ env.ResourceGroup }}
+          template: ./aks/azuredeploy.json
+          parameters: ./aks/azuredeploy.parameters.json

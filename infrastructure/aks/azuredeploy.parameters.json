@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+      "kubernetesVersion":{
+          "value": "1.18.14"
+      },
+      "nodeCount": {
+          "value": 3
+      },
+      "clusterName": {
+          "value": "clu-gitops"
+      },
+      "environment": {
+          "value": "demo"
+      },
+      "dnsPrefix": {
+          "value": "gitopsdemo"
+      },
+      "poolName": {
+          "value": "gitopspool"
+      },
+      "vnet": {
+          "value": "vnet-aksgitops"
+      }
+
+}}
