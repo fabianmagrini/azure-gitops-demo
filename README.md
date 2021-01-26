@@ -41,15 +41,23 @@ We do that directly using the GH comand line.
 gh secret set SUBSCRIPTION_ID --body "{SubscriptionID}"
 ```
 
-### Configure secrets
+### Configure keys
 
 ```sh
+deploymentName=gitops-demo
 # This generates a passphrase with 128 bits of entropy
 clusterPassword=$(dd if=/dev/urandom bs=16 count=1 2>/dev/null | base64 | sed 's/=//g')
 # Generate SSH Key
-ssh-keygen -t rsa -f key.rsa
-gh secret set SSH_PUBLIC_KEY < key.rsa.pub
+ssh-keygen \
+    -m PEM \
+    -t rsa \
+    -b 4096 \
+    -C $deploymentName \
+    -f key.rsa \
+    -N $clusterPassword
 ```
+
+For now we will simply copy the public RSA key into the parameters file.
 
 ## Run the workflow
 
@@ -69,7 +77,16 @@ az group delete --name $resourceGroupName --yes --no-wait
 Added default values to the template when running local.
 
 ```sh
-az deployment group create --resource-group $resourceGroupName --template-file "./infrastructure/aks/azuredeploy.json"
+deploymentName=gitops-demo
+resourceGroupName=rg-gitops-demo
+location=australiaeast
+az group create -l $location -n $resourceGroupName
+az deployment group create \
+  --name $deploymentName \
+  --resource-group $resourceGroupName \
+  --template-file "./infrastructure/aks/azuredeploy.json" \
+  --parameters @"./infrastructure/aks/azuredeploy.parameters.json"
+
 ```
 
 ## References
