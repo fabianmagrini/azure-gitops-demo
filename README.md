@@ -41,6 +41,16 @@ We do that directly using the GH comand line.
 gh secret set SUBSCRIPTION_ID --body "{SubscriptionID}"
 ```
 
+### Configure secrets
+
+```sh
+# This generates a passphrase with 128 bits of entropy
+clusterPassword=$(dd if=/dev/urandom bs=16 count=1 2>/dev/null | base64 | sed 's/=//g')
+# Generate SSH Key
+ssh-keygen -t rsa -f key.rsa
+gh secret set SSH_PUBLIC_KEY < key.rsa.pub
+```
+
 ## Run the workflow
 
 You may trigger the deploy workflow manually from the GitHub website.
@@ -52,8 +62,19 @@ resourceGroupName={resource group name}
 az group delete --name $resourceGroupName --yes --no-wait
 ```
 
+## Appendix
+
+### Deploy the ARM template from local
+
+Added default values to the template when running local.
+
+```sh
+az deployment group create --resource-group $resourceGroupName --template-file "./infrastructure/aks/azuredeploy.json"
+```
+
 ## References
 
 * <https://docs.github.com/en/actions/learn-github-actions/introduction-to-github-actions>
 * <https://github.com/Azure/actions>
 * <https://github.com/marketplace/actions/azure-login>
+* <https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough-rm-template>

@@ -10,3 +10,7 @@
 
 # Logs
 *.log
+
+# Keys
+key.rsa
+key.rsa.pub

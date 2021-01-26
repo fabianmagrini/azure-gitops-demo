@@ -1,27 +1,20 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-      "kubernetesVersion":{
-          "value": "1.18.14"
-      },
-      "nodeCount": {
-          "value": 3
-      },
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
       "clusterName": {
-          "value": "clu-gitops"
-      },
-      "environment": {
-          "value": "demo"
+        "value": "GEN-UNIQUE"
       },
       "dnsPrefix": {
-          "value": "gitopsdemo"
+        "value": "GEN-UNIQUE"
       },
-      "poolName": {
-          "value": "gitopspool"
+      "linuxAdminUsername": {
+        "value": "GEN-UNIQUE"
       },
-      "vnet": {
-          "value": "vnet-aksgitops"
+      "sshRSAPublicKey": {
+        "value": "GEN-SSH-PUB-KEY"
       }
+    }
+  }
 
-}}
+
