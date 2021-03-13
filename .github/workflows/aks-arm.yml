@@ -1,4 +1,4 @@
-name: 'Deploy AKS cluster using Bicep'
+name: 'Deploy AKS cluster using ARM'
 
 on:
   workflow_dispatch:
@@ -24,6 +24,10 @@ jobs:
         run: |
           az group create -l ${{ env.Location }} -n ${{ env.ResourceGroup }}
 
-      - name: 'Run AKS deployment'
-        run: |
-          az deployment group create --name devenvironment --resource-group ${{ env.ResourceGroup }} --template-file ./infrastructure/aks/main.bicep --parameters ./infrastructure/aks/main.parameters.json
+      - name: 'Create AKS resources from ARM template'
+        uses: azure/arm-deploy@v1
+        with:
+          subscriptionId: ${{ secrets.SUBSCRIPTION_ID }}
+          resourceGroupName: ${{ env.ResourceGroup }}
+          template: ./infrastructure/aks/arm-templates/azuredeploy.json
+          parameters: ./infrastructure/aks/arm-templates/azuredeploy.parameters.json

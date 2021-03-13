@@ -84,8 +84,25 @@ az group create -l $location -n $resourceGroupName
 az deployment group create \
   --name $deploymentName \
   --resource-group $resourceGroupName \
-  --template-file "./infrastructure/aks/azuredeploy.json" \
-  --parameters @"./infrastructure/aks/azuredeploy.parameters.json"
+  --template-file "./infrastructure/aks/arm-templates/azuredeploy.json" \
+  --parameters @"./infrastructure/aks/arm-templates/azuredeploy.parameters.json"
+
+```
+
+### Deploy the Bicep template from local
+
+Added default values to the template when running local.
+
+```sh
+deploymentName=gitops-demo
+resourceGroupName=rg-gitops-demo
+location=australiaeast
+az group create -l $location -n $resourceGroupName
+az deployment group create \
+  --name $deploymentName \
+  --resource-group $resourceGroupName \
+  --template-file "./infrastructure/aks/main.bicep" \
+  --parameters "./infrastructure/aks/main.parameters.json"
 
 ```
 
@@ -95,3 +112,4 @@ az deployment group create \
 * <https://github.com/Azure/actions>
 * <https://github.com/marketplace/actions/azure-login>
 * <https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough-rm-template>
+* <https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/bicep-tutorial-create-first-bicep?tabs=azure-cli>

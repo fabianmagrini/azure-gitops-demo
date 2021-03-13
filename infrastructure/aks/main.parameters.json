@@ -1,0 +1,18 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "clusterName": {
+        "value": "clu-gitops"
+      },
+      "dnsPrefix": {
+        "value": "gitopsdemo"
+      },
+      "linuxAdminUsername": {
+        "value": "cluadmin"
+      },
+      "sshRSAPublicKey": {
+        "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCzwk7TyKIj3iBOySmcSJL3Bekamy7aRvWfVpO8Z2XWWOst+2F6xCq70aZ8aw9wKzimaCfTPnp44/KbxjseS9gxTlFJm1xlLNrhsV+kv79avQ/XFhS3PfmpsYELv3dowd8FcpoJ52bzVWGUHS5sgP3pGofP2ntGFy0sfbnZXkVwITJA+Smfs57uP+MuDaiSXY5Yn7sVzAjSw3BbFLyh8VzSA3ftfM2WUYk9Bl1N3rWTvvIAibEmFFUf+LB7FSXWNZnfW2DXZVVidJiDlqnI+xGjdfTHC2QmRNrmiVXJ9uefT0Fq1+TKh4G5yPKAXI8zthpjZ+6uO2XmOk7knylBJMtcIptlLGILLfKQRKJ7GRcq9x8RNIdpjUA5y/79PgG5KYOlL38+Fec85oJVwc4IdIcl28FFkrWOQTgtWkL0ulr5Bl9jTeJC0M4Yq6ZwqFkfGJU3BW+fpm3VkVa/cXDlAhWrRtAJC3Ic6ykWLOf3sK/EGxihc8nh5tYMnj9jKtyJwr0jl5Zk3W8qreeOgDo93IzRRmig8JtD3lOPnLe2KMrKzGagzYHUCAtI1Wf9kbnp0F8MVdE4Z533/QRHoJGJaJPNhn5Tb+vEs9SqLHrm05GqrJTmh8rvS0xIaZ6XcygpueeV4HL/q+718YB1akuYe5vKMN4hTZttUW8hTuuhBRo6Jw== gitops-demo"
+      }
+    }
+  }
