@@ -102,7 +102,7 @@ az deployment group create \
   --name $deploymentName \
   --resource-group $resourceGroupName \
   --template-file "./infrastructure/aks/main.bicep" \
-  --parameters "./infrastructure/aks/main.parameters.json"
+  --parameters "./infrastructure/aks/main.parameters.dev.json"
 
 ```
 
