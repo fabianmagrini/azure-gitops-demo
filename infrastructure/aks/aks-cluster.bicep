@@ -38,7 +38,7 @@ param resourceTags object = {
   Project: 'Azure-GitOps-Demo'
 }
 
-resource clusterName_resource 'Microsoft.ContainerService/managedClusters@2020-03-01' = {
+resource aks 'Microsoft.ContainerService/managedClusters@2020-03-01' = {
   name: clusterName
   location: location
   tags: resourceTags
@@ -69,4 +69,6 @@ resource clusterName_resource 'Microsoft.ContainerService/managedClusters@2020-0
   }
 }
 
+output id string = aks.id
+output name string = aks.name
 output controlPlaneFQDN string = reference(clusterName).fqdn
