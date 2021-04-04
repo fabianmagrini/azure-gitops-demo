@@ -139,7 +139,7 @@ argocd login localhost:8080
 argocd account update-password
 ```
 
-You can now connect to https://localhost:8080 to get to the UI and use the credentials set in the step above.
+You can now connect to <https://localhost:8080> to get to the UI and use the credentials set in the step above.
 
 Creating Apps Via CLI
 
