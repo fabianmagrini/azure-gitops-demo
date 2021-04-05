@@ -70,6 +70,16 @@ resourceGroupName={resource group name}
 az group delete --name $resourceGroupName --yes --no-wait
 ```
 
+## References
+
+* <https://docs.github.com/en/actions/learn-github-actions/introduction-to-github-actions>
+* <https://github.com/Azure/actions>
+* <https://github.com/marketplace/actions/azure-login>
+* <https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough-rm-template>
+* <https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/bicep-tutorial-create-first-bicep?tabs=azure-cli>
+* <https://blog.argoproj.io/5-gitops-best-practices-d95cb0cbe9ff>
+* <https://argoproj.github.io/argo-cd/operator-manual/cluster-bootstrapping/#app-of-apps-pattern>
+
 ## Appendix
 
 ### Deploy the ARM template from local
@@ -157,10 +167,10 @@ argocd app get dotnet-api-template
 argocd app sync dotnet-api-template
 ```
 
-## References
+### Connect to the cluster on Azure
 
-* <https://docs.github.com/en/actions/learn-github-actions/introduction-to-github-actions>
-* <https://github.com/Azure/actions>
-* <https://github.com/marketplace/actions/azure-login>
-* <https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough-rm-template>
-* <https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/bicep-tutorial-create-first-bicep?tabs=azure-cli>
+```sh
+resourceGroupName=rg-gitops-demo
+clusterName=clu-gitops
+az aks get-credentials --resource-group $resourceGroupName --name $clusterName
+```

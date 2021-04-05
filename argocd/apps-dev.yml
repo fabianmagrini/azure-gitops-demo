@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: appbundle-apps-dev
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: default
+    name: in-cluster
+  source:
+    path: argocd/apps/dev
+    repoURL: https://github.com/fabianmagrini/azure-gitops-demo
+    targetRevision: HEAD

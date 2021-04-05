@@ -1,0 +1,16 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dotnet-api-template-dev
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: dotnet-api-template-dev
+    name: in-cluster
+  source:
+    path: charts/template-api
+    repoURL: https://github.com/fabianmagrini/dotnet-api-template
+    targetRevision: HEAD
