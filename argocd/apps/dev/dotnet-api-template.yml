@@ -10,6 +10,7 @@ spec:
   destination:
     namespace: dotnet-api-template-dev
     name: in-cluster
+  project: appbundle-project-dev
   source:
     path: charts/template-api
     repoURL: https://github.com/fabianmagrini/dotnet-api-template

@@ -9,6 +9,7 @@ spec:
   destination:
     namespace: default
     name: in-cluster
+  project: appbundle-project-dev
   source:
     path: argocd/apps/dev
     repoURL: https://github.com/fabianmagrini/azure-gitops-demo
