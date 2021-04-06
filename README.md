@@ -174,3 +174,23 @@ resourceGroupName=rg-gitops-demo
 clusterName=clu-gitops
 az aks get-credentials --resource-group $resourceGroupName --name $clusterName
 ```
+
+### Argo CD App of Apps
+
+```sh
+# Create the Dev Project
+kubectl apply -f argocd/projects/project-dev.yml
+argocd proj list
+# Create any required namespaces
+kubectl create namespace dotnet-api-template-dev
+# Create the Root App. Use kubectl as the Argo CD Application is a custom Kubernetes resource
+kubectl apply -f argocd/apps-dev.yml
+# Sync the Root App and its children
+argocd app sync -l app.kubernetes.io/instance=appbundle-apps-dev
+```
+
+Cleanup
+
+```sh
+argocd app delete appbundle-apps-dev
+```
