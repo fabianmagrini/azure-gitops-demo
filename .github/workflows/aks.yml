@@ -7,6 +7,9 @@ env:
   ResourceGroup: rg-gitops-demo
   Location: australiaeast
   ClusterName: clu-gitops
+  RegistryName: GHCR
+  RegistryServer: ghcr.io
+  Namespace: apps-dev
 
 jobs:
   deploy:
@@ -47,3 +50,26 @@ jobs:
       - name: 'Install Argo CD'
         run: |
           kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+      
+      # Configure Argo CD App of Apps
+
+      - name: 'Create the Dev Project'
+        run: |
+          kubectl apply -f argocd/projects/project-dev.yml       
+          
+      - name: 'Create Dev namespace if not exist'
+        run: |
+          kubectl create namespace ${{ env.Namespace }} --dry-run -o json | kubectl apply -f - 
+
+      - name: 'Create imagepullsecret for the Registry'
+        uses: azure/k8s-create-secret@v1
+        with:
+          container-registry-url: ${{ env.RegistryServer }}
+          container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+          container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+          secret-name: ${{ env.RegistryName }}-secret
+          namespace: ${{ env.Namespace }}
+
+      - name: 'Create the Root App'
+        run: |
+          kubectl apply -f argocd/apps-dev.yml
