@@ -1,0 +1,53 @@
+name: 'Configure Argo CD App of Apps'
+
+on:
+  workflow_dispatch:
+
+env:
+  ResourceGroup: rg-gitops-demo
+  Location: australiaeast
+  ClusterName: clu-gitops
+  RegistryName: ghcr
+  RegistryServer: ghcr.io
+  Namespace: apps-dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v2
+
+      - name: 'Azure login' 
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: 'Set the target AKS cluster'
+        uses: Azure/aks-set-context@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          resource-group: ${{ env.ResourceGroup }}
+          cluster-name: ${{ env.ClusterName }}
+
+      - name: 'Create the Dev Project'
+        run: |
+          kubectl apply -f argocd/projects/project-dev.yml       
+          
+      - name: 'Create Dev namespace if not exist'
+        run: |
+          kubectl create namespace ${{ env.Namespace }} --dry-run -o json | kubectl apply -f - 
+
+      - name: 'Create imagepullsecret for the Registry'
+        uses: azure/k8s-create-secret@v1
+        with:
+          container-registry-url: ${{ env.RegistryServer }}
+          container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+          container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+          secret-name: ${{ env.RegistryName }}-secret
+          namespace: ${{ env.Namespace }}
+
+      - name: 'Create the Root App'
+        run: |
+          kubectl apply -f argocd/apps-dev.yml
