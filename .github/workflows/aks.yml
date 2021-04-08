@@ -7,7 +7,7 @@ env:
   ResourceGroup: rg-gitops-demo
   Location: australiaeast
   ClusterName: clu-gitops
-  RegistryName: GHCR
+  RegistryName: ghcr
   RegistryServer: ghcr.io
   Namespace: apps-dev
 
