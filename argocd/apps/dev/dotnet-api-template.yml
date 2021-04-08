@@ -8,7 +8,7 @@ metadata:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: dotnet-api-template-dev
+    namespace: apps-dev
     name: in-cluster
   project: appbundle-project-dev
   source:

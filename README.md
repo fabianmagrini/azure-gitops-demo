@@ -182,7 +182,7 @@ az aks get-credentials --resource-group $resourceGroupName --name $clusterName
 kubectl apply -f argocd/projects/project-dev.yml
 argocd proj list
 # Create any required namespaces
-kubectl create namespace dotnet-api-template-dev
+kubectl create namespace apps-dev
 # Create the Root App. Use kubectl as the Argo CD Application is a custom Kubernetes resource
 kubectl apply -f argocd/apps-dev.yml
 # Sync the Root App and its children
