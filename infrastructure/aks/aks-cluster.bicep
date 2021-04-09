@@ -32,13 +32,16 @@ param sshRSAPublicKey string
 @description('The type of operating system.')
 param osType string = 'Linux'
 
+@description('Log analytics workspace id')
+param workspaceId string = ''
+
 @description('The tags to apply to Managed Cluster resource.')
 param resourceTags object = {
   Environment: 'Dev'
   Project: 'Azure-GitOps-Demo'
 }
 
-resource aks 'Microsoft.ContainerService/managedClusters@2020-03-01' = {
+resource aks 'Microsoft.ContainerService/managedClusters@2021-02-01' = {
   name: clusterName
   location: location
   tags: resourceTags
@@ -61,6 +64,14 @@ resource aks 'Microsoft.ContainerService/managedClusters@2020-03-01' = {
             keyData: sshRSAPublicKey
           }
         ]
+      }
+    }
+    addonProfiles: {
+      omsagent: empty(workspaceId) ? json('null') : {
+        config: {
+          logAnalyticsWorkspaceResourceID: workspaceId
+        }
+        enabled: true
       }
     }
   }
