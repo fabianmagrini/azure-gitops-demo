@@ -6,6 +6,13 @@ param resourceTags object = {
   Project: 'Azure-GitOps-Demo'
 }
 
+// Log Analytics parameters
+@description('Enable Log analytics workspace')
+param enableLogAnalyticsWorkspace bool = true
+
+@description('The prefix for the Log analytics workspace name.')
+param workspaceName string = 'gitopsdemo'
+
 // ACR parameters
 
 @description('The name of the Azure Container Registry.')
@@ -24,6 +31,14 @@ param linuxAdminUsername string = 'cluadmin'
 
 @description('Configure all linux machines with the SSH RSA public key string. Your key should include three parts, for example \'ssh-rsa AAAAB...snip...UcyupgH azureuser@linuxvm\'')
 param sshRSAPublicKey string
+
+module logAnalyticsWorkspace './loganalytics.bicep'  = if(enableLogAnalyticsWorkspace) {
+  name: 'workspace-${workspaceName}'
+  params: {
+    workspaceNamePrefix: workspaceName
+    resourceTags: resourceTags
+  }
+}
 
 module acr 'acr.bicep' = {
   name: registryName  
