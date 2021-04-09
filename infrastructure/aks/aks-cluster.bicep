@@ -45,6 +45,9 @@ resource aks 'Microsoft.ContainerService/managedClusters@2021-02-01' = {
   name: clusterName
   location: location
   tags: resourceTags
+  identity: {
+    type: 'SystemAssigned'
+  }
   properties: {
     dnsPrefix: dnsPrefix
     agentPoolProfiles: [
@@ -75,9 +78,6 @@ resource aks 'Microsoft.ContainerService/managedClusters@2021-02-01' = {
         enabled: true
       }
     }
-  }
-  identity: {
-    type: 'SystemAssigned'
   }
 }
 
