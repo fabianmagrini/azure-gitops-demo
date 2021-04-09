@@ -34,20 +34,3 @@ jobs:
         run: |
           az deployment group create --name devenvironment --resource-group ${{ env.ResourceGroup }} --template-file ./infrastructure/aks/main.bicep --parameters ./infrastructure/aks/main.parameters.dev.json
 
-      # Bootstrap Argo CD on the AKS cluster
-
-      - name: 'Set the target AKS cluster'
-        uses: Azure/aks-set-context@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-          resource-group: ${{ env.ResourceGroup }}
-          cluster-name: ${{ env.ClusterName }}
-
-      - name: 'Create argocd namespace if not exist'
-        run: |
-          kubectl create namespace argocd --dry-run -o json | kubectl apply -f -  
-
-      - name: 'Install Argo CD'
-        run: |
-          kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-          

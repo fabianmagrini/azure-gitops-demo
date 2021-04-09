@@ -1,15 +1,11 @@
-name: 'Configure Argo CD App of Apps'
+name: 'Bootstrap Argo CD on the AKS cluster'
 
 on:
   workflow_dispatch:
 
 env:
   ResourceGroup: rg-gitops-demo
-  Location: australiaeast
   ClusterName: clu-gitops
-  RegistryName: ghcr
-  RegistryServer: ghcr.io
-  Namespace: apps-dev
 
 jobs:
   deploy:
@@ -31,23 +27,10 @@ jobs:
           resource-group: ${{ env.ResourceGroup }}
           cluster-name: ${{ env.ClusterName }}
 
-      - name: 'Create the Dev Project'
+      - name: 'Create argocd namespace if not exist'
         run: |
-          kubectl apply -f argocd/projects/project-dev.yml       
-          
-      - name: 'Create Dev namespace if not exist'
-        run: |
-          kubectl create namespace ${{ env.Namespace }} --dry-run -o json | kubectl apply -f - 
+          kubectl create namespace argocd --dry-run -o json | kubectl apply -f -  
 
-      - name: 'Create imagepullsecret for the Registry'
-        uses: azure/k8s-create-secret@v1
-        with:
-          container-registry-url: ${{ env.RegistryServer }}
-          container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
-          container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-          secret-name: ${{ env.RegistryName }}-secret
-          namespace: ${{ env.Namespace }}
-
-      - name: 'Create the Root App'
+      - name: 'Install Argo CD'
         run: |
-          kubectl apply -f argocd/apps-dev.yml
+          kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
