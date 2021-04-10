@@ -205,6 +205,13 @@ kubectl apply -f argocd/apps-dev.yml
 argocd app sync -l app.kubernetes.io/instance=appbundle-apps-dev
 ```
 
+List all pods and services in all namespaces
+
+```sh
+kubectl get pods --all-namespaces
+kubectl get services --all-namespaces 
+```
+
 Cleanup
 
 ```sh
