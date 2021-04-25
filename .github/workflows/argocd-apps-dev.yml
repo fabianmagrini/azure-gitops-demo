@@ -1,7 +1,9 @@
 name: 'Configure Argo CD App of Apps'
 
 on:
-  workflow_dispatch:
+  workflow_run:
+    workflows: ["Bootstrap Argo CD on the AKS cluster"]
+    types: [completed]
 
 env:
   ResourceGroup: rg-gitops-demo
@@ -11,9 +13,9 @@ env:
   Namespace: apps-dev
 
 jobs:
-  deploy:
+  on-success:
     runs-on: ubuntu-latest
-
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v2
