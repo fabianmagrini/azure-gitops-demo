@@ -34,7 +34,7 @@ jobs:
 
       - name: 'Create the Dev Project'
         run: |
-          kubectl apply -f argocd/projects/project-dev.yml       
+          kubectl apply -f argocd/appofappspattern/projects/project-dev.yml       
           
       - name: 'Create Dev namespace if not exist'
         run: |
@@ -51,4 +51,4 @@ jobs:
 
       - name: 'Create the Root App'
         run: |
-          kubectl apply -f argocd/apps-dev.yml
+          kubectl apply -f argocd/appofappspattern/apps-dev.yml

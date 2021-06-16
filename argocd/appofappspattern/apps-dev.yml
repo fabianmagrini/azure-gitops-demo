@@ -11,6 +11,6 @@ spec:
     name: in-cluster
   project: appbundle-project-dev
   source:
-    path: argocd/apps/dev
+    path: argocd/appofappspattern/apps/dev
     repoURL: https://github.com/fabianmagrini/azure-gitops-demo
     targetRevision: HEAD
