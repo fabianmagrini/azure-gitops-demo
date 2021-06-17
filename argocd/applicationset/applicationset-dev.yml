@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+ name: dotnet-api-template
+spec:
+ generators:
+ - list:
+     elements:
+     - environment: dev
+ template:
+   metadata:
+     name: 'dotnet-api-template-{{environment}}'
+   spec:
+     project: appbundle-project-dev
+     source:
+       repoURL: https://github.com/fabianmagrini/dotnet-api-template
+       targetRevision: HEAD
+       path: charts/template-api
+     destination:
+       server: in-cluster
+       namespace: apps-dev
