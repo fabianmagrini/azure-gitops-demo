@@ -79,6 +79,7 @@ az group delete --name $resourceGroupName --yes --no-wait
 * <https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/bicep-tutorial-create-first-bicep?tabs=azure-cli>
 * <https://blog.argoproj.io/5-gitops-best-practices-d95cb0cbe9ff>
 * <https://argoproj.github.io/argo-cd/operator-manual/cluster-bootstrapping/#app-of-apps-pattern>
+* <https://argocd-applicationset.readthedocs.io/en/stable/Geting-Started/>
 
 ## Appendix
 
