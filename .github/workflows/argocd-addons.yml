@@ -1,0 +1,34 @@
+name: 'Install addons for Argo CD'
+
+on:
+  workflow_run:
+    workflows: ["Bootstrap Argo CD on the AKS cluster"]
+    types: [completed]
+
+env:
+  ResourceGroup: rg-gitops-demo
+  ClusterName: clu-gitops
+
+jobs:
+  on-success:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v2
+
+      - name: 'Azure login' 
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: 'Set the target AKS cluster'
+        uses: Azure/aks-set-context@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          resource-group: ${{ env.ResourceGroup }}
+          cluster-name: ${{ env.ClusterName }}    
+          
+      - name: 'Install ApplicationSet into an existing Argo CD install'
+        run: |
+          kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/applicationset/v0.1.0/manifests/install.yaml
