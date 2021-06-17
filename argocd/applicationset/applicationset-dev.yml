@@ -5,11 +5,11 @@ metadata:
 spec:
  generators:
  - list:
-     elements:
-     - environment: dev
+     - cluster: dev
+       url: https://kubernetes.default.svc
  template:
    metadata:
-     name: 'dotnet-api-template-{{environment}}'
+     name: 'dotnet-api-template-{{cluster}}'
    spec:
      project: appbundle-project-dev
      source:
