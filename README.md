@@ -183,6 +183,12 @@ argocd app get dotnet-api-template
 argocd app sync dotnet-api-template
 ```
 
+Install ApplicationSet into an existing Argo CD install
+
+```sh
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/applicationset/v0.1.0/manifests/install.yaml
+```
+
 ### Connect to the cluster on Azure
 
 ```sh
