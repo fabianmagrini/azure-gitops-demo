@@ -158,7 +158,7 @@ The initial password for the admin account is auto-generated and stored as clear
 
 ```sh
 # You can simply retrieve this password using kubectl:
-kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && echo
 # Using the username admin and the password from above, login to Argo CD's IP or hostname:
 argocd login localhost:8080
 # Change the password using the command:
