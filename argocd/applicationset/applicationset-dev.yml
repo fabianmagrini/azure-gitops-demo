@@ -12,7 +12,6 @@ spec:
    metadata:
      name: 'dotnet-api-template-{{cluster}}'
    spec:
-     project: appbundle-project-dev
      source:
        repoURL: https://github.com/fabianmagrini/dotnet-api-template
        targetRevision: HEAD
