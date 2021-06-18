@@ -224,3 +224,28 @@ Cleanup
 ```sh
 argocd app delete appbundle-apps-dev
 ```
+
+### ApplicationSet
+
+```sh
+# Create the Dev Project
+kubectl apply -f argocd/applicationset/project-dev.yml
+argocd proj list
+# Create any required namespaces
+kubectl create namespace apps-dev
+# Create the ApplicationSet. Use kubectl as the Argo CD ApplicationSet is a custom Kubernetes resource
+kubectl apply -f argocd/applicationset/applicationset-dev.yml
+```
+
+List all applicationsets and applications in all namespaces
+
+```sh
+kubectl get applicationset,application -A
+argocd app list
+```
+
+Cleanup
+
+```sh
+kubectl delete ApplicationSet dotnet-api-template --cascade=orphan
+```
