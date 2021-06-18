@@ -12,6 +12,7 @@ spec:
    metadata:
      name: 'dotnet-api-template-{{cluster}}'
    spec:
+     project: default
      source:
        repoURL: https://github.com/fabianmagrini/dotnet-api-template
        targetRevision: HEAD
